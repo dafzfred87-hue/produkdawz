@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DaWz Store Official — Layanan Digital Terpercaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000;--bg:#050507;--bg2:#09090d;--bg3:#0d0d12;--card:#101016;--card2:#141420;
+  --b1:rgba(255,255,255,0.05);--b2:rgba(255,255,255,0.09);--b3:rgba(255,255,255,0.14);
+  --text:#fff;--text2:#8888aa;--text3:#44445a;
+  --gold:#f5c842;--gold2:#e8a800;--gold3:#ffd866;
+  --gb:rgba(245,200,66,0.08);--gbr:rgba(245,200,66,0.18);
+  --pur:#a855f7;--purb:rgba(168,85,247,0.08);--purbr:rgba(168,85,247,0.18);
+  --grn:#22c55e;--grnb:rgba(34,197,94,0.08);--grnbr:rgba(34,197,94,0.18);
+  --red:#ef4444;--redb:rgba(239,68,68,0.08);--redbr:rgba(239,68,68,0.2);
+  --blu:#3b82f6;--blub:rgba(59,130,246,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── CANVAS FX ───────────────────────────────────── */
+#cv{position:fixed;inset:0;z-index:0;pointer-events:none}
+.orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.o1{width:600px;height:600px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(245,200,66,0.055),transparent 70%);animation:orbf 12s ease-in-out infinite alternate}
+.o2{width:700px;height:700px;bottom:-300px;right:-200px;background:radial-gradient(circle,rgba(168,85,247,0.045),transparent 70%);animation:orbf 15s 2s ease-in-out infinite alternate}
+.o3{width:400px;height:400px;top:40%;right:10%;background:radial-gradient(circle,rgba(34,197,94,0.03),transparent 70%);animation:orbf 10s 4s ease-in-out infinite alternate}
+@keyframes orbf{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.2) translate(30px,-20px)}}
+.grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.scanline{position:fixed;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(245,200,66,0.3) 50%,transparent 100%);z-index:1;pointer-events:none;animation:scan 8s linear infinite}
+@keyframes scan{0%{top:-2px}100%{top:100vh}}
+
+/* ── NAV ─────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.75);backdrop-filter:blur(24px);border-bottom:1px solid var(--b1);transition:transform .3s}
+.nlogo{display:flex;align-items:center;gap:10px}
+.nmark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#f5c842,#e8a800);display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 20px rgba(245,200,66,0.35);position:relative;overflow:hidden}
+.nmark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.3),transparent);border-radius:9px}
+.nname{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff}
+.nname span{color:var(--gold)}
+.nbadge{font-size:9px;padding:2px 7px;border-radius:20px;background:var(--gb);color:var(--gold);border:1px solid var(--gbr);letter-spacing:.05em;text-transform:uppercase}
+.nright{display:flex;align-items:center;gap:10px}
+.nlive{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--grn);padding:4px 10px;border-radius:20px;border:1px solid var(--grnbr);background:var(--grnb)}
+.ndot{width:6px;height:6px;border-radius:50%;background:var(--grn);box-shadow:0 0 8px var(--grn);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 8px var(--grn)}50%{opacity:.4;box-shadow:0 0 3px var(--grn)}}
+.nord-nav{padding:7px 16px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .2s;font-family:'Space Grotesk',sans-serif;letter-spacing:.02em}
+.nord-nav:hover{box-shadow:0 0 25px rgba(245,200,66,0.45);transform:translateY(-1px)}
+
+/* ── HERO ────────────────────────────────────────── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 1.25rem 3rem;position:relative;z-index:10}
+.htag{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--gold);border:1px solid var(--gbr);background:var(--gb);padding:6px 16px;border-radius:20px;margin-bottom:1.75rem;animation:fu .8s ease both;letter-spacing:.04em}
+.htag-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.htitle{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.6rem,10vw,5.2rem);font-weight:800;line-height:1.03;letter-spacing:-0.03em;margin-bottom:1.25rem;animation:fu .8s .08s ease both}
+.htitle .hl{background:linear-gradient(135deg,#f5c842 0%,#ff9500 40%,#a855f7 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:gshift 4s linear infinite}
+@keyframes gshift{0%{background-position:0% center}100%{background-position:200% center}}
+.hdesc{font-size:15px;color:var(--text2);line-height:1.8;max-width:560px;margin:0 auto 2.25rem;animation:fu .8s .16s ease both}
+.hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fu .8s .24s ease both;margin-bottom:3rem}
+.hbtn1{display:flex;align-items:center;gap:9px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,#f5c842,#e8a800);color:#000;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .22s;font-family:'Space Grotesk',sans-serif;box-shadow:0 0 40px rgba(245,200,66,0.2),inset 0 1px 0 rgba(255,255,255,0.3)}
+.hbtn1:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(245,200,66,0.4),inset 0 1px 0 rgba(255,255,255,0.3)}
+.hbtn2{display:flex;align-items:center;gap:9px;padding:14px 28px;border-radius:12px;background:transparent;color:var(--text);font-size:14px;font-weight:600;border:1px solid var(--b2);cursor:pointer;transition:all .2s;font-family:'Space Grotesk',sans-serif}
+.hbtn2:hover{background:var(--bg3);border-color:var(--b3)}
+.hstats{display:flex;gap:2rem;justify-content:center;animation:fu .8s .32s ease both;flex-wrap:wrap}
+.hst{text-align:center}
+.hstv{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:var(--gold);text-shadow:0 0 20px rgba(245,200,66,0.4)}
+.hstl{font-size:11px;color:var(--text3);margin-top:2px;letter-spacing:.04em}
+
+/* scroll arrow */
+.sarrow{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.sline{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(245,200,66,0.5),transparent)}
+.stxt{font-size:9px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase}
+
+/* ── SECTION ─────────────────────────────────────── */
+section{position:relative;z-index:10;padding:5rem 1.25rem}
+.slabel{display:flex;align-items:center;justify-content:center;gap:8px;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.9rem}
+.slabel::before,.slabel::after{content:'';flex:0 0 24px;height:1px;background:linear-gradient(to right,transparent,rgba(245,200,66,0.4))}
+.slabel::after{background:linear-gradient(to left,transparent,rgba(245,200,66,0.4))}
+.stitle{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,5vw,2.4rem);font-weight:700;text-align:center;margin-bottom:.6rem}
+.sdesc{text-align:center;color:var(--text2);font-size:14px;max-width:480px;margin:0 auto 3rem;line-height:1.7}
+
+/* ── FEATURES ────────────────────────────────────── */
+.fgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:800px;margin:0 auto}
+.fcard{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;cursor:default}
+.fcard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,200,66,0.025),transparent 60%);opacity:0;transition:.25s}
+.fcard:hover{border-color:var(--gbr);transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,0,0,0.5)}
+.fcard:hover::before{opacity:1}
+.ficon{font-size:28px;margin-bottom:.75rem;display:block;filter:drop-shadow(0 0 8px rgba(245,200,66,0.3))}
+.ftitle{font-size:14px;font-weight:600;margin-bottom:5px}
+.fdesc{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* ── STORE INFO CARD ─────────────────────────────── */
+.info-card{background:linear-gradient(135deg,rgba(245,200,66,0.04),rgba(168,85,247,0.04));border:1px solid var(--gbr);border-radius:20px;padding:2rem;max-width:700px;margin:0 auto 4rem;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.info-card::after{content:'';position:absolute;bottom:-1px;left:30%;right:30%;height:1px;background:linear-gradient(90deg,transparent,var(--pur),transparent)}
+.info-top{display:flex;align-items:center;gap:14px;margin-bottom:1.5rem}
+.info-crown{width:50px;height:50px;border-radius:14px;background:var(--gb);border:1px solid var(--gbr);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.info-brand{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:3px}
+.info-brand span{color:var(--gold)}
+.info-sub{font-size:12px;color:var(--text2)}
+.info-rows{display:flex;flex-direction:column;gap:0}
+.info-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--b1)}
+.info-row:last-child{border-bottom:none}
+.info-row-left{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2)}
+.info-row-val{font-size:13px;font-weight:600}
+.info-row-val.on{color:var(--grn)}
+.info-row-val.gold{color:var(--gold)}
+
+/* ── CAT TABS ────────────────────────────────────── */
+.cattabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.cattab{padding:8px 18px;border-radius:20px;border:1px solid var(--b1);background:transparent;color:var(--text2);font-size:13px;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.cattab.on{background:var(--gb);color:var(--gold);border-color:var(--gbr);box-shadow:0 0 16px rgba(245,200,66,0.1)}
+.cattab:hover:not(.on){background:var(--bg3);color:var(--text);border-color:var(--b2)}
+
+/* ── PRODUCT CARDS ───────────────────────────────── */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:860px;margin:0 auto}
+.pcard{background:var(--card);border:1px solid var(--b1);border-radius:20px;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,200,66,0.2),transparent);opacity:0;transition:.3s}
+.pcard:hover{border-color:var(--gbr);transform:translateY(-3px);box-shadow:0 24px 64px rgba(0,0,0,0.6)}
+.pcard:hover::before{opacity:1}
+.phdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:1.1rem}
+.pico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;position:relative}
+.pico.g{background:var(--gb);border:1px solid var(--gbr)}
+.pico.p{background:var(--purb);border:1px solid var(--purbr)}
+.pico.gr{background:var(--grnb);border:1px solid var(--grnbr)}
+.pname{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px}
+.psub{font-size:11px;color:var(--text2)}
+.prices{margin-bottom:1.1rem}
+.prow{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--b1)}
+.prow:last-child{border-bottom:none}
+.prow-name{font-size:12px;color:var(--text2)}
+.prow-val{font-size:13px;font-weight:600;color:var(--gold)}
+.prow-val.pm{color:var(--pur);font-size:12px}
+.pnote{padding:.7rem .85rem;border-radius:10px;font-size:11px;line-height:1.6;margin-bottom:1.1rem}
+.pnote.p{background:var(--purb);border:1px solid var(--purbr);color:#c084fc}
+.pnote.gr{background:var(--grnb);border:1px solid var(--grnbr);color:#86efac}
+.pnote.r{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);color:#fca5a5}
+
+/* ORDER BUTTON — shiny */
+.obtn{width:100%;padding:12px;border-radius:11px;background:linear-gradient(135deg,#f5c842,#e8b800);color:#000;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .22s;font-family:'Space Grotesk',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(245,200,66,0.15),inset 0 1px 0 rgba(255,255,255,0.3)}
+.obtn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);transition:left .4s}
+.obtn:hover::before{left:100%}
+.obtn:hover{box-shadow:0 0 40px rgba(245,200,66,0.4),inset 0 1px 0 rgba(255,255,255,0.3);transform:translateY(-1px)}
+.obtn:active{transform:scale(0.98)}
+
+/* ── ROLE BOT ────────────────────────────────────── */
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:860px;margin:0 auto}
+.rcard{background:var(--card);border:1px solid var(--b1);border-radius:20px;overflow:hidden}
+.rhdr{padding:1rem 1.25rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:10px}
+.rhico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.rhico.g{background:var(--grnb);border:1px solid var(--grnbr)}
+.rhico.r{background:var(--redb);border:1px solid var(--redbr)}
+.rhtitle{font-size:13px;font-weight:600}
+.rhsub{font-size:11px;color:var(--text2);margin-top:1px}
+.rtier-label{padding:5px 1.1rem;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,0.015)}
+.ritem{display:flex;align-items:center;justify-content:space-between;padding:9px 1.1rem;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(255,255,255,0.025)}
+.ritem:last-of-type{border-bottom:none}
+.ritem:hover{background:rgba(245,200,66,0.04)}
+.rname{font-size:12.5px;color:var(--text2);transition:color .15s}
+.ritem:hover .rname{color:var(--text)}
+.rprice{font-size:12.5px;font-weight:600;color:var(--gold)}
+.rnote{padding:.75rem 1.1rem;border-top:1px solid var(--b1)}
+.rnote-box{background:rgba(245,200,66,0.04);border:1px solid var(--gbr);border-radius:8px;padding:.6rem .75rem;font-size:11px;color:var(--text2);line-height:1.6}
+
+/* ── ADVANTAGES ──────────────────────────────────── */
+.agrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:860px;margin:0 auto}
+.acard{background:var(--card);border:1px solid var(--b1);border-radius:14px;padding:1.25rem;text-align:center;transition:all .22s;cursor:default}
+.acard:hover{border-color:var(--gbr);transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,0.5)}
+.aico{font-size:28px;margin-bottom:.7rem;display:block;filter:drop-shadow(0 0 10px rgba(245,200,66,0.25))}
+.atitle{font-size:13px;font-weight:600;margin-bottom:4px}
+.adesc{font-size:11.5px;color:var(--text2);line-height:1.5}
+
+/* ── TESTI PLACEHOLDER ───────────────────────────── */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:860px;margin:0 auto}
+.tcard{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:1.25rem;position:relative}
+.tcard::before{content:'"';position:absolute;top:.5rem;right:1rem;font-size:48px;color:rgba(245,200,66,0.08);font-family:'Space Grotesk',sans-serif;font-weight:800;line-height:1}
+.tstars{display:flex;gap:2px;margin-bottom:.6rem}
+.tstar{color:var(--gold);font-size:12px}
+.ttxt{font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:.85rem}
+.tauthor{display:flex;align-items:center;gap:8px}
+.tavatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--pur));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#000;flex-shrink:0}
+.tname{font-size:12px;font-weight:500}
+.tdate{font-size:10px;color:var(--text3)}
+
+/* ── CTA ─────────────────────────────────────────── */
+.ctawrap{max-width:680px;margin:0 auto;text-align:center}
+.ctabox{background:linear-gradient(135deg,rgba(245,200,66,0.05),rgba(168,85,247,0.05));border:1px solid var(--gbr);border-radius:24px;padding:3rem 2rem;position:relative;overflow:hidden}
+.ctabox::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.ctabox::after{content:'';position:absolute;bottom:-1px;left:25%;right:25%;height:1px;background:linear-gradient(90deg,transparent,var(--pur),transparent)}
+.ctitle{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,5vw,2.1rem);font-weight:700;margin-bottom:.7rem}
+.cdesc{font-size:14px;color:var(--text2);margin-bottom:2rem;line-height:1.6}
+.cbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.bwa{display:flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;background:#25D366;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .22s;font-family:'Space Grotesk',sans-serif}
+.bwa:hover{background:#1db954;box-shadow:0 0 30px rgba(37,211,102,0.35);transform:translateY(-1px)}
+.btg{display:flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;background:#229ED9;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .22s;font-family:'Space Grotesk',sans-serif}
+.btg:hover{background:#1a86bb;box-shadow:0 0 30px rgba(34,158,217,0.35);transform:translateY(-1px)}
+.ccontact{font-size:12px;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.ccontact a{color:var(--gold);text-decoration:none}
+.ccontact a:hover{text-decoration:underline}
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer{position:relative;z-index:10;padding:2.5rem 1.25rem 2rem;border-top:1px solid var(--b1);text-align:center}
+.flogo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:.85rem;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+.fdesc{font-size:12px;color:var(--text3);margin-bottom:.5rem}
+.fbottom{font-size:11px;color:var(--text3)}
+.fbottom span{color:var(--gold)}
+
+/* ── TOAST ───────────────────────────────────────── */
+#toastwrap{position:fixed;bottom:1.25rem;right:1.25rem;z-index:999;display:flex;flex-direction:column;gap:8px;max-width:280px}
+.toast{background:rgba(10,10,16,0.95);backdrop-filter:blur(16px);border:1px solid var(--gbr);color:var(--gold);border-radius:12px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:9px;animation:tslide .3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.6)}
+.toast-wa{border-color:rgba(37,211,102,.3);color:#22c55e}
+.toast-tg{border-color:rgba(34,158,217,.3);color:#38bdf8}
+@keyframes tslide{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+.tico{width:20px;height:20px;border-radius:50%;background:rgba(245,200,66,.15);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+
+/* MOBILE */
+@media(max-width:640px){
+  .pgrid,.rgrid,.tgrid{grid-template-columns:1fr}
+  .agrid{grid-template-columns:repeat(2,1fr)}
+  .fgrid{grid-template-columns:1fr}
+  .hstats{gap:1.25rem}
+  .nord-nav{display:none}
+  .info-top{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+<div class="o1 orb"></div>
+<div class="o2 orb"></div>
+<div class="o3 orb"></div>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nlogo">
+    <div class="nmark">👑</div>
+    <div class="nname">DaWz <span>Store</span></div>
+    <div class="nbadge">Official</div>
+  </div>
+  <div class="nright">
+    <div class="nlive"><div class="ndot"></div>OPEN ORDER</div>
+    <button class="nord-nav" onclick="goTo('#cta')">Order Sekarang</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="htag"><div class="htag-dot"></div>OPEN ORDER · PROSES 1–5 MENIT</div>
+  <h1 class="htitle">DaWz Store<br><span class="hl">Official</span></h1>
+  <p class="hdesc">Amanah · Bergaransi · Fast Response · 24 Jam.<br>Panel Pterodactyl, Role Bot, dan Layanan Digital terpercaya.</p>
+  <div class="hbtns">
+    <button class="hbtn1" onclick="goTo('#products')">🛒 Lihat Produk</button>
+    <button class="hbtn2" onclick="wa()">💬 Order WA</button>
+  </div>
+  <div class="hstats">
+    <div class="hst"><div class="hstv">99%</div><div class="hstl">Uptime</div></div>
+    <div class="hst"><div class="hstv">24/7</div><div class="hstl">Support</div></div>
+    <div class="hst"><div class="hstv">1–5M</div><div class="hstl">Proses</div></div>
+    <div class="hst"><div class="hstv">100+</div><div class="hstl">Pembeli</div></div>
+  </div>
+  <div class="sarrow"><div class="sline"></div><div class="stxt">scroll</div></div>
+</div>
+
+<!-- STORE INFO -->
+<section>
+  <div class="info-card">
+    <div class="info-top">
+      <div class="info-crown">👑</div>
+      <div>
+        <div class="info-brand">DaWz <span>Store</span> Official</div>
+        <div class="info-sub">Platform Layanan Digital · Panel · Role Bot · Hosting</div>
+      </div>
+    </div>
+    <div class="info-rows">
+      <div class="info-row">
+        <div class="info-row-left">🟢 Status Store</div>
+        <div class="info-row-val on">ONLINE</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-left">⚡ Kecepatan Proses</div>
+        <div class="info-row-val gold">1–5 Menit</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-left">🛡️ Garansi</div>
+        <div class="info-row-val gold">Full Masa Aktif</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-left">📞 Admin</div>
+        <div class="info-row-val gold">24 Jam</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-left">⚙️ Support Script</div>
+        <div class="info-row-val gold">Baileys · MD · TG · Node · Python</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-left">📲 Kontak</div>
+        <div class="info-row-val gold">@Dafzfred</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="slabel">Keunggulan</div>
+  <h2 class="stitle">Kenapa Pilih DaWz Store?</h2>
+  <p class="sdesc">Layanan terpercaya dengan garansi penuh dan admin aktif 24 jam siap membantu</p>
+  <div class="fgrid">
+    <div class="fcard"><span class="ficon">🔒</span><div class="ftitle">Garansi Full</div><div class="fdesc">Garansi penuh selama masa aktif tanpa syarat ribet. Masalah langsung ditangani admin.</div></div>
+    <div class="fcard"><span class="ficon">🚀</span><div class="ftitle">Server Anti-Lag</div><div class="fdesc">Uptime 99%, server stabil, performa tinggi. Bot kamu berjalan 24 jam tanpa gangguan.</div></div>
+    <div class="fcard"><span class="ficon">⚙️</span><div class="ftitle">Multi-Script</div><div class="fdesc">Support Bot WA Baileys/MD, Bot Telegram, Node.js, Python, dan berbagai script lainnya.</div></div>
+    <div class="fcard"><span class="ficon">🤝</span><div class="ftitle">Bimbingan Pemula</div><div class="fdesc">Panduan lengkap sampai paham. Admin siap membantu dari awal hingga bot kamu aktif.</div></div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="slabel">Katalog</div>
+  <h2 class="stitle">Layanan Digital</h2>
+  <p class="sdesc">Pilih layanan yang kamu butuhkan dan langsung order via Telegram</p>
+  <div class="cattabs">
+    <button class="cattab on" onclick="filter('all',this)">Semua</button>
+    <button class="cattab" onclick="filter('panel',this)">📦 Panel Regular</button>
+    <button class="cattab" onclick="filter('unlimited',this)">⚡ Unlimited</button>
+    <button class="cattab" onclick="filter('reseller',this)">💼 Reseller</button>
+  </div>
+  <div class="pgrid">
+
+    <div class="pcard" data-cat="panel">
+      <div class="phdr">
+        <div class="pico g">📦</div>
+        <div><div class="pname">Panel Pterodactyl</div><div class="psub">RAM Regular · Per Bulan</div></div>
+      </div>
+      <div class="prices">
+        <div class="prow"><span class="prow-name">🖥 RAM 1 GB</span><span class="prow-val">Rp 900</span></div>
+        <div class="prow"><span class="prow-name">🖥 RAM 2 GB</span><span class="prow-val">Rp 1.000</span></div>
+        <div class="prow"><span class="prow-name">🖥 RAM 3 GB</span><span class="prow-val">Rp 2.000</span></div>
+        <div class="prow"><span class="prow-name">🖥 RAM 4 GB</span><span class="prow-val">Rp 3.500</span></div>
+        <div class="prow"><span class="prow-name">🖥 RAM 6 GB</span><span class="prow-val">Rp 6.000</span></div>
+        <div class="prow"><span class="prow-name">🖥 RAM 8 GB</span><span class="prow-val">Rp 8.000</span></div>
+        <div class="prow"><span class="prow-name">🖥 RAM 10 GB</span><span class="prow-val">Rp 10.000</span></div>
+      </div>
+      <button class="obtn" onclick="order('Panel Pterodactyl Regular')">🛒 ORDER SEKARANG</button>
+    </div>
+
+    <div class="pcard" data-cat="unlimited">
+      <div class="phdr">
+        <div class="pico p">⚡</div>
+        <div><div class="pname">Panel RAM Unlimited</div><div class="psub">Bebas resource · Per Bulan</div></div>
+      </div>
+      <div class="prices">
+        <div class="prow"><span class="prow-name">∞ RAM Unlimited</span><span class="prow-val">Rp 14.000</span></div>
+      </div>
+      <div class="pnote p">🔥 Cocok untuk bot 24 jam dengan banyak plugin & fitur besar. Bebas pakai resource tanpa takut cepat habis.</div>
+      <button class="obtn" onclick="order('Panel RAM Unlimited')">🛒 ORDER SEKARANG</button>
+    </div>
+
+    <div class="pcard" data-cat="reseller">
+      <div class="phdr">
+        <div class="pico gr">💼</div>
+        <div><div class="pname">Reseller Panel VIP</div><div class="psub">Open Reseller · Per Bulan</div></div>
+      </div>
+      <div class="prices">
+        <div class="prow"><span class="prow-name">👑 Reseller VIP</span><span class="prow-val">Rp 17.000</span></div>
+      </div>
+      <div class="pnote gr">💰 Bisa buat Admin, Reseller lain & Full Fitur. Raih cuan tiap hari dari jualan panel sendiri! Langsung profit.</div>
+      <button class="obtn" onclick="order('Reseller Panel VIP')">🛒 ORDER SEKARANG</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROLE BOT -->
+<section id="role">
+  <div class="slabel">Role Bot</div>
+  <h2 class="stitle">Open Role Bot CPanel DaWz</h2>
+  <p class="sdesc">Klik role yang kamu mau, langsung diarahkan ke Telegram untuk order</p>
+  <div class="rgrid">
+
+    <div class="rcard">
+      <div class="rhdr">
+        <div class="rhico g">🟢</div>
+        <div>
+          <div class="rhtitle">Kategori 1 — Bebas PT-PT</div>
+          <div class="rhsub">Tanpa biaya patungan saat VPS mati</div>
+        </div>
+      </div>
+      <div class="ritem" onclick="order('All Role')"><span class="rname">👑 All Role</span><span class="rprice">Rp 20.000</span></div>
+      <div class="ritem" onclick="order('Founder')"><span class="rname">🏆 Founder</span><span class="rprice">Rp 17.000</span></div>
+      <div class="ritem" onclick="order('CEO')"><span class="rname">💎 CEO</span><span class="rprice">Rp 15.000</span></div>
+      <div class="ritem" onclick="order('Developer')"><span class="rname">⚙️ Developer</span><span class="rprice">Rp 14.000</span></div>
+      <div class="ritem" onclick="order('Manager SVIP')"><span class="rname">🌟 Manager SVIP</span><span class="rprice">Rp 12.000</span></div>
+      <div class="ritem" onclick="order('Manager VIP')"><span class="rname">⭐ Manager VIP</span><span class="rprice">Rp 10.000</span></div>
+      <div class="rnote"><div class="rnote-box">✅ Murni TANPA patungan. Server tetap diurus & dipelihara aktif.</div></div>
+    </div>
+
+    <div class="rcard">
+      <div class="rhdr">
+        <div class="rhico r">🔴</div>
+        <div>
+          <div class="rhtitle">Kategori 2 — Wajib PT-PT</div>
+          <div class="rhsub">Patungan Rp1.000–2.000 saat VPS mati</div>
+        </div>
+      </div>
+      <div class="rtier-label">Tier Pengurus & VIP</div>
+      <div class="ritem" onclick="order('VIP Member')"><span class="rname">💜 VIP Member</span><span class="rprice">Rp 8.000</span></div>
+      <div class="ritem" onclick="order('Staff')"><span class="rname">📋 Staff</span><span class="rprice">Rp 7.000</span></div>
+      <div class="ritem" onclick="order('Asisten')"><span class="rname">🔧 Asisten</span><span class="rprice">Rp 6.000</span></div>
+      <div class="ritem" onclick="order('TK')"><span class="rname">🎯 TK</span><span class="rprice">Rp 5.000</span></div>
+      <div class="ritem" onclick="order('Partner')"><span class="rname">🤝 Partner</span><span class="rprice">Rp 4.000</span></div>
+      <div class="rtier-label">Tier Private Server</div>
+      <div class="ritem" onclick="order('Private Owner')"><span class="rname">🔐 Private Owner</span><span class="rprice">Rp 6.000</span></div>
+      <div class="ritem" onclick="order('Private Premium')"><span class="rname">💫 Private Premium</span><span class="rprice">Rp 4.000</span></div>
+      <div class="ritem" onclick="order('Private Reseller')"><span class="rname">📦 Private Reseller</span><span class="rprice">Rp 3.000</span></div>
+      <div class="rtier-label">Tier Public Server</div>
+      <div class="ritem" onclick="order('Public Owner')"><span class="rname">🌐 Public Owner</span><span class="rprice">Rp 4.000</span></div>
+      <div class="ritem" onclick="order('Public Premium')"><span class="rname">✨ Public Premium</span><span class="rprice">Rp 3.000</span></div>
+      <div class="ritem" onclick="order('Public Reseller')"><span class="rname">🏪 Public Reseller</span><span class="rprice">Rp 2.000</span></div>
+      <div class="rnote"><div class="rnote-box">⚠️ Wajib ikut PT-PT saat ganti VPS. Jika tidak, akses role ditahan sementara.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section>
+  <div class="slabel">Keuntungan</div>
+  <h2 class="stitle">Beli di DaWz Store</h2>
+  <div class="agrid">
+    <div class="acard"><span class="aico">🔒</span><div class="atitle">Garansi Full</div><div class="adesc">Garansi penuh selama masa aktif</div></div>
+    <div class="acard"><span class="aico">🚀</span><div class="atitle">Anti-Lag 99%</div><div class="adesc">Server stabil, uptime tinggi</div></div>
+    <div class="acard"><span class="aico">⚙️</span><div class="atitle">Multi-Script</div><div class="adesc">Baileys, MD, Telegram, Node, Python</div></div>
+    <div class="acard"><span class="aico">🤝</span><div class="atitle">Support 24/7</div><div class="adesc">Admin aktif, bimbingan pemula</div></div>
+  </div>
+</section>
+
+<!-- TESTI -->
+<section>
+  <div class="slabel">Testimoni</div>
+  <h2 class="stitle">Kata Pembeli</h2>
+  <p class="sdesc">Lihat lebih banyak testimoni di <a href="https://t.me/DaWzStore9" style="color:var(--gold);text-decoration:none" target="_blank">t.me/DaWzStore9</a></p>
+  <div class="tgrid">
+    <div class="tcard">
+      <div class="tstars">⭐⭐⭐⭐⭐</div>
+      <div class="ttxt">Panel stabil banget, bot WA ku udah jalan 24 jam nonstop. Admin juga fast respon kalau ada masalah. Recommended!</div>
+      <div class="tauthor"><div class="tavatar">AB</div><div><div class="tname">Agus B.</div><div class="tdate">Panel 4GB · Nov 2026</div></div></div>
+    </div>
+    <div class="tcard">
+      <div class="tstars">⭐⭐⭐⭐⭐</div>
+      <div class="ttxt">Murah tapi kualitas premium. Role bot nya langsung aktif setelah transfer. Puas banget sama layanannya!</div>
+      <div class="tauthor"><div class="tavatar">RS</div><div><div class="tname">Reza S.</div><div class="tdate">Role VIP Member · Okt 2026</div></div></div>
+    </div>
+    <div class="tcard">
+      <div class="tstars">⭐⭐⭐⭐⭐</div>
+      <div class="ttxt">Udah 3 bulan pakai panel unlimited, belum pernah down sekalipun. Admin DaWz Store terbaik deh!</div>
+      <div class="tauthor"><div class="tavatar">FH</div><div><div class="tname">Fajar H.</div><div class="tdate">Panel Unlimited · Sep 2026</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="ctawrap">
+    <div class="ctabox">
+      <div class="slabel">Order Sekarang</div>
+      <h2 class="ctitle">Siap Mulai Order?</h2>
+      <p class="cdesc">Hubungi admin sekarang untuk order, cek ketersediaan stok, atau lihat testimoni lengkap pembeli.</p>
+      <div class="cbtns">
+        <button class="bwa" onclick="wa()">💬 Order WhatsApp</button>
+        <button class="btg" onclick="tg()">✈️ Telegram @Dafzfred</button>
+      </div>
+      <div class="ccontact">
+        <span>✈️ Telegram: <a href="https://t.me/Dafzfred" target="_blank">@Dafzfred</a></span>
+        <span>·</span>
+        <span>📢 Testimoni: <a href="https://t.me/DaWzStore9" target="_blank">t.me/DaWzStore9</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo"><div class="nmark" style="width:28px;height:28px;font-size:13px">👑</div>DaWz <span style="color:var(--gold)">Store</span> Official</div>
+  <div class="fdesc">Platform layanan digital terpercaya · Panel Pterodactyl · Role Bot · Hosting</div>
+  <div class="fbottom">© 2026 <span>DaWz Store</span> · All rights reserved · Telegram: @Dafzfred</div>
+</footer>
+
+<div id="toastwrap"></div>
+
+<script>
+/* Canvas particle */
+(function(){
+  const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+  resize();window.addEventListener('resize',resize);
+  function mkpt(){return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.2+.3,a:Math.random()*.4+.05}}
+  for(let i=0;i<60;i++)pts.push(mkpt());
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(245,200,66,${p.a})`;ctx.fill();
+    });
+    /* connect near */
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(245,200,66,${.08*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke()}
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* Nav hide on scroll */
+let ly=0;
+window.addEventListener('scroll',()=>{
+  const y=scrollY,nav=document.getElementById('nav');
+  nav.style.transform=y>ly&&y>80?'translateY(-100%)':'translateY(0)';ly=y;
+});
+
+/* Filter */
+function filter(cat,btn){
+  document.querySelectorAll('.cattab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pcard').forEach(c=>{c.style.display=cat==='all'||c.dataset.cat===cat?'block':'none'});
+}
+
+/* Go to */
+function goTo(id){document.querySelector(id)?.scrollIntoView({behavior:'smooth'})}
+
+/* Toast */
+let tc=0;
+function toast(msg,cls=''){
+  if(tc>=3)return;tc++;
+  const w=document.getElementById('toastwrap');
+  const t=document.createElement('div');
+  t.className='toast'+(cls?' '+cls:'');
+  t.innerHTML=`<div class="tico">✓</div>${msg}`;
+  w.appendChild(t);
+  setTimeout(()=>{t.style.animation='tslide .3s ease reverse';setTimeout(()=>{t.remove();tc--},300)},3000);
+}
+
+/* Order → Telegram */
+function order(name){
+  const msg=encodeURIComponent(`Halo kak DaWz Store! 👋\n\nSaya mau order:\n*${name}*\n\nMohon info lebih lanjut ya kak 🙏`);
+  window.open(`https://t.me/Dafzfred?text=${msg}`,'_blank');
+  toast(`Mengarahkan ke Telegram untuk order ${name}...`,'toast-tg');
+}
+
+function wa(){
+  const msg=encodeURIComponent('Halo kak DaWz Store! 👋\nSaya mau order, bisa bantu? 🙏');
+  window.open(`https://wa.me/6281234567890?text=${msg}`,'_blank');
+  toast('Membuka WhatsApp...','toast-wa');
+}
+
+function tg(){
+  window.open('https://t.me/Dafzfred','_blank');
+  toast('Membuka Telegram @Dafzfred...','toast-tg');
+}
+
+/* Animate on scroll */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});
+},{threshold:.1});
+document.querySelectorAll('.pcard,.rcard,.fcard,.acard,.tcard').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .5s ease, transform .5s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
